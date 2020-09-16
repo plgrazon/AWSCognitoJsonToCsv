@@ -44,7 +44,7 @@ exec(
 
         jsonToCsvWriter(csv);
       } catch (err) {
-        if (err) console.log('error parsing', err);
+        console.log('error parsing', err);
       }
     }
   }
