@@ -6,20 +6,15 @@ const {
 const fs = require('fs');
 
 const jsonToCsvWriter = (csv) => {
-  if (err) console.log('error converting', err);
-
   fs.writeFile('./users.csv', csv, (err) => {
     if (err) console.log('error writing');
     else console.log('saved');
   });
 };
 
-// Just change necessary fields
-// npm install
-// npm start
 exec(
   'aws --region <region> cognito-idp list-users\
-  --user-pool-id <pool id> --output\
+  --user-pool-id <id> --profile <dev/prod> --output\
   json > <output path>',
   (err, data) => {
     if (err) console.log(err);
@@ -29,6 +24,7 @@ exec(
         const fields = [
           'Username',
           'Attributes.Name',
+          'Attributes.Value',
           'UserCreateDate',
           'UserLastModifiedDate',
           'Enabled',
@@ -44,7 +40,7 @@ exec(
 
         jsonToCsvWriter(csv);
       } catch (err) {
-        if (err) console.log('error parsing', err);
+        console.log('error parsing', err);
       }
     }
   }
